@@ -1,0 +1,6 @@
+com.fdm.Pinance
+com.fdm.Pinance.config
+com.fdm.Pinance.controller
+com.fdm.Pinance.dal
+com.fdm.Pinance.model
+com.fdm.Pinance.service

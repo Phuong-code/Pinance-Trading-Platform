@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Account Balance</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+            margin-top: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #ffffff;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header h1 {
+            font-size: 30px;
+            color: #333333;
+            margin: 0;
+        }
+        
+        .buttonHeader {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .button {
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #e8d115;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .buttonTransaction {
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #e8d115;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .button:hover {
+            background-color: #f7e12d;
+        }
+        
+        .buttonTransaction:hover {
+            background-color: #f7e12d;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        th {
+            background-color: #f2f2f2;
+            border-bottom: 1px solid #dddddd;
+            padding: 12px 16px;
+            font-size: 21px;
+            color: #333333;
+            text-align: left;
+        }
+        
+        td {
+            border-bottom: 1px solid #dddddd;
+            padding: 12px 16px;
+            font-size: 20px;
+            color: #555555;
+        }
+        
+        .total-value {
+            font-size: 25px;
+            font-weight: bold;
+            color: #333333;
+            margin-top: 30px;
+        }
+        
+        .deposit-withdraw {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        .amount-input {
+            flex: 1;
+            padding: 8px;
+            font-size: 22px;
+            border: 1px solid #dddddd;
+            margin-right: 100px;
+            margin-top: 10px;
+        }
+        
+        .deposit-withdraw .button {
+            margin-left: 10px;
+        }
+        
+        /* Add media query for mobile devices */
+        @media screen and (max-width: 390px) and (max-height: 844px){
+            
+            .container {
+	            width:90%;
+	        }
+	        
+	        .header {
+	            height: 170px;
+	        }
+	        
+	        .header h1 {
+	            font-size: 30px;
+	            color: #333333;
+	            margin: 0;
+	        }
+
+            table {
+	            width: 100%;
+	            border-collapse: collapse;
+	            margin-bottom: 20px;
+	        }
+
+        
+	        th {
+	            font-size: 18px;
+	            padding: 25px 10px;
+	        }
+        
+	        td {
+	            font-size: 20px;
+	            color: #555555;
+	            padding: 25px 10px;
+	        }
+	        
+	        .buttonHeader {
+	            display: flex;
+	            flex-direction: column;
+	            margin-top: 20px;
+	        }
+
+	        .button {
+	            padding: 10px 20px;
+	            font-size: 18px;
+	            width: 140px;
+	            height: 70px;
+	            margin-bottom: 20px;
+	        }
+
+	        .deposit-withdraw {
+	            display: flex;
+	            align-items: center;
+	            margin-top: 20px;
+	            flex-direction: column;
+	        }
+	        
+	        .total-value {
+	            font-size: 20px;
+	            margin-top: 30px;
+	        }
+	        
+	        .buttonTransaction {
+	            padding: 10px 20px;
+	            font-size: 20px;
+	            margin-left: 40px;
+	            width: 180px;
+	        }
+	        .amount-input {
+	            flex: 1;
+	            padding: 8px;
+	            font-size: 22px;
+	            margin: 5px 100px 20px 40px;
+	        }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Account Balance</h1>
+            <div class="buttonHeader">
+            	<div>
+            		<form th:action="@{/openMarket}" method="post">
+                		<button class="button">Go To Market</button>
+            		</form>
+        		</div>
+                <div style="width: 20px;"></div> <!-- Adding a spacer of 20px -->
+                <div>
+            		<form th:action="@{/goToMainPageFromAccountBalance}" method="post">
+                		<button class="button">Go To Main Page</button>
+            		</form>
+        		</div>
+            </div>
+        </div>
+        
+        <table>
+            <tr>
+                <th>Currency</th>
+                <th>Amount</th>
+                <th>Estimated Value (USD)</th>
+            </tr>
+            <tr>
+                <td>USD</td>
+                <td></td>
+                <td><span id="usdValue" th:text="'$' + ${usdValue}"></span></td>
+
+            </tr>
+            <tr>
+                <td>BTC</td>
+                <td th:text="${accountBalance?.btc}"></td>
+                <td th:text="'$' + ${btcValue}"></td>
+            </tr>
+            <tr>
+                <td>ETH</td>	
+                <td th:text="${accountBalance?.eth}"></td>
+                <td th:text="'$' + ${ethValue}"></td>
+            </tr>
+            <tr>
+                <td>DOGE</td>
+                <td th:text="${accountBalance?.doge}"></td>
+                <td th:text="'$' + ${dogeValue}"></td>
+            </tr>
+            <tr>
+                <td>XRP</td>
+                <td th:text="${accountBalance?.xrp}"></td>
+                <td th:text="'$' + ${xrpValue}"></td>
+            </tr>
+            <tr>
+                <td>BNB</td>
+                <td th:text="${accountBalance?.bnb}"></td>
+                <td th:text="'$' + ${bnbValue}"></td>
+            </tr>
+        </table>
+        
+        <p class="total-value">Total Value in USD: $<span th:text="${totalValue}"></span></p>
+        
+        <div class="deposit-withdraw">
+        	<form th:action="@{/depositUSD}" method="post" onsubmit="onDepositClicked()">
+         		<button class="buttonTransaction" type="submit">Deposit USD</button>
+         		<input class="amount-input" type="number" id="DepositAmountInput" name="amount" placeholder="Enter amount" step="any" required min='0'>
+       		</form>
+       		<form th:action="@{/withdrawUSD}" method="post" onsubmit="onWithdrawClicked()">
+          		<button class="buttonTransaction" type="submit">Withdraw USD</button>
+           		<input class="amount-input" type="number" id="withdrawAmountInput" name="amount" placeholder="Enter amount" step="any" required min='0'>
+       		</form>
+   		</div>
+    </div>
+    
+    
+    <script>
+	    function onDepositClicked() {
+	    	const amount = document.getElementById('DepositAmountInput').value;
+	        if (amount) {
+	            alert('You have deposited $' + amount);
+	            
+	        } else {
+	            alert('Please enter the amount to deposit.');
+	        }
+	    }
+	
+	    function onWithdrawClicked() {
+	    	const withdrawAmount = document.getElementById('withdrawAmountInput').value;
+	    	const currentBalanceSpan = document.getElementById('usdValue');
+	        
+	        if (withdrawAmount) {
+	            const amount = parseFloat(withdrawAmount);
+	            const currentBalance = parseFloat(currentBalanceSpan.innerText.replace('$', ''));
+	            
+	            if (amount > currentBalance) {
+	                alert('You cannot withdraw more than $' + currentBalance);
+	            } else {
+	                alert('You have withdrawn $' + amount);
+	                
+	            }
+	        } else {
+	            alert('Please enter the amount to withdraw.');
+	        }
+	    }
+    </script>
+    
+</body>
+</html>

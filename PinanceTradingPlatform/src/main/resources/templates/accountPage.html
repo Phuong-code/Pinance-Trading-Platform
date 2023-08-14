@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .account-card {
+            width: 400px;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .account-card h2 {
+            margin-top: 0;
+            font-size: 24px;
+        }
+
+        .account-card p {
+            margin-bottom: 20px;
+        }
+
+        .account-card .attribute-label {
+            font-weight: bold;
+        }
+
+        .account-card .attribute-value {
+            color: #6a6a6a;
+        }
+
+        .back-button {
+            background-color: #e8d115;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .back-button:hover {
+            background-color: #f7e12d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="account-card">
+            <h2>Account</h2>
+            <p><span class="attribute-label">Account Balance:</span> <span class="attribute-value" th:text="${accountBalance}"></span></p>
+            <p><span class="attribute-label">Stock Name:</span> <span class="attribute-value" th:text="${stockName}"></span></p>
+            <p><span class="attribute-label">Stock Count:</span> <span class="attribute-value" th:text="${stockCount}"></span></p>
+            <button class="back-button" onclick="goBack()">Go Back</button>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

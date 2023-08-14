@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<!-- Console Appender -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    <!-- Transaction History File Appender -->
+    <appender name="TRANSACTION_HISTORY_INFO_FILE" class="ch.qos.logback.core.FileAppender">
+        <file>src/main/resources/log/transaction_history.log</file>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    <!-- Error File Appender -->
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.FileAppender">
+        <file>src/main/resources/log/error.log</file>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    <!-- Warn File Appender -->
+    <appender name="WARN_FILE" class="ch.qos.logback.core.FileAppender">
+        <file>src/main/resources/log/warn.log</file>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+	<!-- Loggers -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <!--
+        <appender-ref ref="INFO_FILE" />
+        -->
+    </root>
+    
+    <!-- Custom logger for user buy/sell crypto, deposit/withdraw USD transactions -->
+    <logger name="com.fdm.Pinance.service.AccountBalanceService" level="INFO">
+        <appender-ref ref="TRANSACTION_HISTORY_INFO_FILE" />
+    </logger>
+    
+    <!-- Logger for ERROR level (logs all errors) -->
+    <!--
+    <logger name="ROOT" level="ERROR">
+        <appender-ref ref="ERROR_FILE" />
+    </logger> 
+    -->
+    
+    <!-- Logger for WARN level (logs all warns) -->
+    <!--
+    <logger name="ROOT" level="WARN">
+        <appender-ref ref="WARN_FILE" />
+    </logger> 
+    -->
+    
+    <!-- Hibernate SQL logging -->
+    <!--
+    <logger name="org.hibernate.SQL" level="OFF" />
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="OFF" />
+    -->
+</configuration>

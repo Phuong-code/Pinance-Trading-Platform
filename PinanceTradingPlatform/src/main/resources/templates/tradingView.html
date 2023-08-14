@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinance - Register</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <style>
+        .select-container {
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+            margin-top: 20px;
+            height: 40px;       
+        }
+
+        .select-label {
+            margin-right: 10px;
+            font-size: 28px;
+            width: 215px; 
+            flex-shrink: 0;
+            font-family: "Arial", sans-serif;
+            font-weight: bold;
+        }
+        
+        #pairs {
+            width: 100px;
+            font-size: 22px;
+        }   
+        
+        #tvchart {
+            height: 75vh;
+            float: center;
+        }
+        
+        .button-container1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-left: auto;
+            margin-top: 10px;
+        }
+        
+        .button-container2 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .buttonTransaction {
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #e8d115;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .buttonHeader {
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #e8d115;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #f7e12d;
+        }
+        
+        .buttonHeader:hover {
+            background-color: #f7e12d;
+        }
+
+        .input-container {
+            display: flex;
+            justify-content: center;
+            height: 45px;
+            margin-bottom: 10px;
+        }
+
+        .amount-input {
+            padding: 10px;
+            font-size: 20px;
+            margin-right: 100px;
+            width: 150px;
+            border: 1px solid #ccc;
+        }
+        
+        /* Add media query for mobile devices */
+        @media screen and (max-width: 390px) and (max-height: 844px) {
+            .select-container {
+	            display: flex;
+	            align-items: center;
+	            margin-left: 10px;
+	            margin-top: 60px;
+	            margin-bottom: 20px;
+	            height: 40px;     
+	        }
+            
+	        .select-label {
+	            margin-right: 25px;
+	            font-size: 20px;
+	            width: 50px; 
+	            flex-shrink: 0;
+	            font-family: "Arial", sans-serif;
+	            font-weight: bold;
+	        }
+
+            .brand-logo {
+                /* Update the font size for the brand logo */
+                font-size: 24px;
+                margin-top: 20px;
+                margin-bottom: 10px;
+            }
+            
+            #pairs {
+	            width: 90px;
+	            font-size: 20px;
+	            height: 35px;
+	            margin-left: 10px;
+        	} 
+        	
+        	#tvchart {
+        		margin-top: 20px;
+	            height: 55vh;
+	            float: center;
+	        }
+	        
+	        .buttonHeader {
+	            font-size: 18px;
+	            background-color: #e8d115;
+	            color: white;
+	            border: none;
+	            width: 170px;
+	            margin-left: 25px;
+	            height: 60px;
+	            transition: background-color 0.3s ease;
+	        }
+	        
+        	.buttonTransaction {
+	            padding: 10px 20px;
+	            font-size: 20px;
+	            background-color: #e8d115;
+	            color: white;
+	            border: none;
+	            width: 85px;
+	        }
+	        
+	        .amount-input {
+	            padding: 10px;
+	            font-size: 20px;
+	            margin-right: 100px;
+	            width: 150px;
+	            border: 1px solid #ccc;
+	        }
+	        
+	        
+        }
+
+    </style>
+</head>
+<body>
+    <div class="select-container">
+        <span class="select-label">Choose market</span>
+        <select onChange="LoadCharts();" id="pairs">
+            <option value="BTCUSDT">BTC</option>
+            <option value="ETHUSDT">ETH</option>
+            <option value="DOGEUSDT">DOGE</option>
+            <option value="XRPUSDT">XRP</option>
+            <option value="BNBUSDT">BNB</option>
+        </select>
+        <div class="button-container1">
+            <form th:action="@{/openAccountBalance}" method="post">
+                <button class="buttonHeader">Check Account Balance</button>
+            </form>
+            <form th:action="@{/goToMainPageFromTradingView}" method="post">
+                <button class="buttonHeader">Go To Main Page</button>
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="tradingview-widget-container" id="tvchart"></div>
+    <div class="button-container2">
+        <form th:action="@{/buyCrypto}" method="post" onsubmit="onBuyClicked()">
+     		<button class="buttonTransaction" type="submit">BUY</button>
+     		<input type="hidden" id="selectedCryptoSymbol1" name="cryptoSymbol" value="">
+     		<input class="amount-input" type="number" id="buyAmountInput" name="buyAmount" placeholder="Enter amount" step="any" required min='0'>
+   		</form>
+   		<form th:action="@{/sellCrypto}" method="post" onsubmit="onSellClicked()">
+      		<button class="buttonTransaction" type="submit">SELL</button>
+      		<input type="hidden" id="selectedCryptoSymbol2" name="cryptoSymbol" value="">
+       		<input class="amount-input" type="number" id="sellAmountInput" name="sellAmount" placeholder="Enter amount" step="any" required min='0'>
+   		</form>       		
+    </div>
+    <script>
+        LoadCharts();
+        function LoadCharts() {
+            let selectedCrypto = document.getElementById('pairs').value;
+            document.getElementById('selectedCryptoSymbol1').value = selectedCrypto;
+            document.getElementById('selectedCryptoSymbol2').value = selectedCrypto;
+            let symbol = document.getElementById('pairs').value;
+            //RENDER CHART
+            new TradingView.widget(
+              {
+                  "autosize": true,
+                  "symbol": "BINANCE:" + symbol,
+                  "interval": "1",
+                  "timezone": "Australia/Sydney",
+                  "theme": "light",
+                  "style": "1",
+                  "locale": "en",
+                  "toolbar_bg": "#f1f3f6",
+                  "enable_publishing": true,
+                  "hide_side_toolbar": false,
+                  "allow_symbol_change": true,
+                  "save_image": false,
+                  "details": true,
+                  "container_id": "tvchart"
+              });
+        }
+
+        function onBuyClicked() {
+        	const buyAmount = document.getElementById('buyAmountInput').value;
+            if (buyAmount) {
+                alert('Buy ' + buyAmount + ' units');  
+            } else {
+                alert('Please enter a quantity.');
+            }
+        }
+
+        function onSellClicked() {
+            const sellAmount = document.getElementById('sellAmountInput').value;
+            if (sellAmount) {
+                alert('Sell ' + sellAmount + ' units');
+            } else {
+                alert('Please enter a quantity.');
+            }
+        }
+    </script>
+</body>
+</html>

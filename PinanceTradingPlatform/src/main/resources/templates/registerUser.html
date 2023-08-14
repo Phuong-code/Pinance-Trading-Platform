@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinance - Register</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .register-box {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+            width: 400px;
+            margin-top: 120px;
+        }
+
+        .register-box h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .register-box input[type="text"],
+        .register-box input[type="password"],
+        .register-box input[type="email"] {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            padding: 10px;
+            width: 100%;
+        }
+
+        .register-box button {
+            background-color: #e8d115;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 10px 20px;
+            width: 100%;
+        }
+
+        .register-box button:hover {
+            background-color: #f7e12d;
+        }
+        
+        .error-message {
+            color: red;
+            font-size: 25px;
+        }
+        .footer {
+            background-color: #e8d115;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: auto;
+            width: 100%;
+        }
+        
+        /* Add media query for mobile devices */
+        @media screen and (max-width: 390px) and (max-height: 844px) {
+        	.register-box {
+	            width: 270px;
+	            margin-top:70px;
+	        }
+	        
+	        .register-box h2 {
+	            font-size: 32px;
+	            margin-bottom: 20px;
+	        }
+	        
+	        .register-box button {
+	            font-size: 20px;
+	            width: 270px;
+	        }
+	        
+	        .register-box input[type="text"],
+	        .register-box input[type="password"],
+	        .register-box input[type="email"] {
+	            font-size: 20px;
+	            width: 245px;
+	        }
+	        
+	        .register {
+	        	width: 180px;
+	        }
+	        
+	        .register-box p{
+	        	font-size: 20px;
+	        }
+	        
+	        .footer {
+				font-size: 20px;
+	        }
+        }
+    </style>
+</head>
+<body>
+    <div class="register-box">
+        <h2>Register</h2>
+        <p th:if="${message}" class="error-message" th:text="${message}"></p>
+        <form id="register" th:action="@{/addUserObject}" method="POST" >
+			<input type="text" name="username" placeholder="Username" required/><br>
+			<input type="password" name="password"  placeholder="Password"  required /><br>
+			<input type="text" name="firstName" placeholder="First Name"  required/><br>
+			<input type="text" name="lastName" placeholder="Last Name"  required/><br>
+			<input type="email" name="email" placeholder="Email" required /><br>
+            <button type="submit">Register</button>	
+        </form>
+        <p>Already have an account? <a href="/">Login</a></p>
+    </div>
+    <div class="footer">2023 Pinance</div>
+</body>
+</html>
