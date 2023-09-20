@@ -1,4 +1,4 @@
-# Pinance Application Readme
+# Pinance Trading Platform
 
 Welcome to the Pinance application! This application allows users to manage their financial activities, including account balances, cryptocurrency trading, and more. To get started with the application, please follow the instructions below.
 
